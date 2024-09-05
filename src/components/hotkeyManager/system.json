@@ -1,0 +1,13 @@
+{
+	"propSpecConfig": {
+		"path": "src/components/hotkeyManager/props.js",
+		"functions": [],
+		"dependents": [
+			{
+				"path": "src/components/hotkeyManager/internalProps.js",
+				"functions": [],
+				"dependents": []
+			}
+		]
+	}
+}

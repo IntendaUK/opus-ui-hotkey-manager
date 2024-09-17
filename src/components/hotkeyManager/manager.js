@@ -96,8 +96,9 @@ export const getKeysBuffer = () => {
 	return manager.keysBuffer;
 };
 
-export const clearKeysBuffer = () => {
+export const clear = () => {
 	manager.keysBuffer.length = 0;
+	manager.currentlyHeldKeys.length = 0;
 };
 
 // Manager

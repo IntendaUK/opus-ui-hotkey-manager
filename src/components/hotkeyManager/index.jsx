@@ -6,7 +6,7 @@ import { createContext, } from '@intenda/opus-ui';
 import KeyEventListener from './components/KeyEventListener';
 
 //Helpers
-import { clearKeysBuffer } from './manager';
+import { clear } from './manager';
 
 //Context
 const HotkeyManagerContext = createContext('hotkeyManager');
@@ -15,11 +15,11 @@ const HotkeyManagerContext = createContext('hotkeyManager');
 const onMount = () => {
 	document.addEventListener('visibilitychange', () => {
 		if (!document.hidden)
-			clearKeysBuffer();
+			clear();
 	});
 
 	window.addEventListener('focus', () => {
-		clearKeysBuffer();
+		clear();
 	});
 };
 

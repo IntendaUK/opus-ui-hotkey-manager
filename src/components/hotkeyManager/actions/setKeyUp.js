@@ -1,5 +1,5 @@
 // Helpers
-import { clearKeysBuffer, getCurrentlyHeldKeys, removeCurrentlyHeldKey } from '../manager';
+import { clear, getCurrentlyHeldKeys, removeCurrentlyHeldKey } from '../manager';
 
 // Events
 import onKeyCombinationUp from '../events/onKeyCombinationUp';
@@ -12,7 +12,7 @@ const setKeyUp = ({ triggeredKey }) => {
 
 	if (!currentlyHeldKeys.length) {
 		onKeyCombinationUp()
-		clearKeysBuffer()
+		clear()
 	}
 }
 

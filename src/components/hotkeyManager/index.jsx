@@ -17,6 +17,10 @@ const onMount = () => {
 		if (!document.hidden)
 			clearKeysBuffer();
 	});
+
+	window.addEventListener('focus', () => {
+		clearKeysBuffer();
+	});
 };
 
 //Exports

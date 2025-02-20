@@ -50,7 +50,7 @@ createRoot(document.getElementById('root'))
 					{
 						type: 'label',
 						prps: {
-							cpt: 'Press shift + o to trigger',
+							caption: 'Press shift + o to trigger',
 							fontSize: '32px',
 							color: '#222'
 						}
@@ -63,7 +63,7 @@ createRoot(document.getElementById('root'))
 								{
 									from: '||c1||',
 									fromKey: 'triggered',
-									toKey: 'cpt',
+									toKey: 'caption',
 									mapFunctionString: v => v ? 'Triggered: true': 'Triggered false'
 								},
 								{

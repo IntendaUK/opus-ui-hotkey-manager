@@ -39,18 +39,23 @@ const customCopyPlugin = () => {
 					filesToCopy = [srcDir ? path.join(srcDir, pattern) : pattern];
 				}
 
-				await Promise.all(filesToCopy.map(async dirent => {
-					const relativePath = path.relative(srcDir, dirent);
-					const destPath = path.join(distDir, relativePath);
+				await Promise.all(
+					filesToCopy.map(async filePath => {
+						//Compute the relative path from the srcDir, if provided.
+						const relativePath = srcDir
+							? path.relative(srcDir, filePath)
+							: path.basename(filePath);
+						const destPath = path.join(distDir, relativePath);
 
-					if ((await fs.lstat(dirent)).isDirectory())
-						await fs.mkdir(destPath, { recursive: true });
-					else {
-						await fs.mkdir(path.dirname(destPath), { recursive: true });
-
-						await fs.copyFile(dirent, destPath);
-					}
-				}));
+						const stat = await fs.lstat(filePath);
+						if (stat.isDirectory())
+							await fs.mkdir(destPath, { recursive: true });
+						else {
+							await fs.mkdir(path.dirname(destPath), { recursive: true });
+							await fs.copyFile(filePath, destPath);
+						}
+					})
+				);
 			};
 
 			await copyFiles('src/components', 'dist/components', 'src/components/**/system.json');
@@ -59,17 +64,16 @@ const customCopyPlugin = () => {
 	};
 };
 
-const fileExists = async checkPath => {
+async function fileExists (path) {
 	try {
-		await fs.access(checkPath);
+		await fs.access(path);
 
 		return true;
 	} catch {
 		return false;
 	}
-};
+}
 
-/* eslint-disable max-lines-per-function */
 export default defineConfig(async () => {
 	let monorepoAliases = {};
 	let monorepoWatchPaths = [];
@@ -97,8 +101,8 @@ export default defineConfig(async () => {
 
 	return {
 		plugins: [
-			libCss(),
 			customCopyPlugin(),
+			libCss(),
 			react()
 		],
 		build: {
@@ -110,6 +114,7 @@ export default defineConfig(async () => {
 			},
 			rollupOptions: { external: [...Object.keys(packageJson.peerDependencies)] }
 		},
+		optimizeDeps: { esbuildOptions: { loader: { '.js': 'jsx' } } },
 		resolve: { alias: monorepoAliases },
 		server: { watch: { ignored: monorepoWatchPaths } }
 	};

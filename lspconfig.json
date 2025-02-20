@@ -2,7 +2,7 @@
 	"components": [
 		{
 			"name": "hotkeyManager",
-			"path": "src/components/hotkeyManager"
+			"path": "dist/components/hotkeyManager"
 		}
 	]
 }
